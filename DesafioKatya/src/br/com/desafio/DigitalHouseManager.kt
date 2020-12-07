@@ -52,8 +52,8 @@ class DigitalHouseManager {
 
     fun matricularAlunoCurso(codigoCurso: Int, codigoAluno: Int) {
         val aluno = encontrarAluno(codigoAluno)
-        val curso = encontrarCurso(codigoCurso)
-        val novaMatricula = Matricula(aluno, curso)
+        val curso = encontrarCurso(codigoCurso)// todo sua funcao encontrar curso esta retornando um Aluno e não Curso, por isso nao reconhece as funcoes adicionarAlunos e quantMaxAlunos
+        val novaMatricula = Matricula(aluno, curso)//todo aqui esta faltando passar a data da matricula
 
         if (aluno != null && curso != null)
             if (curso.adicionarAluno(aluno)) {
@@ -80,7 +80,7 @@ class DigitalHouseManager {
 
         }
 
-        fun encontrarCurso(codigoCurso: Int): Aluno? {
+        fun encontrarCurso(codigoCurso: Int): Aluno? {//todo aqui deveria retornar curso e não aluno
             var cursoEncontrado: Aluno? = null
             listaDeAlunos.forEach { aluno ->
                 if (aluno.codigoAluno == codigoCurso) {
@@ -95,6 +95,12 @@ class DigitalHouseManager {
     fun alocarProfessor (codigoCurso: Int, codigoProfessor: Int){
         var professorTitular: ProfessorTitular ? = listaProfessorTitular [codigoProfessor]
         var professorAdjunto: ProfessorAdjunto ? = listaProfessorAdjunto [codigoProfessor]
+
+        // todo sua lista de cursos não tem os atributos de professor titular e adjunto, por isso não tem como acessar
+        // outra coisa, esse tipo de acesso é por indice, a não ser que seu codigo do curso corresponda ao indice da lista
+        // vc estará pegando o elemento errado da lista, para fazer dessa forma vc poderia usar um map<key, value>, key sendo
+        // codigo do curso e valor sendo o curso em si :)
+
         listaDeCurso [codigoCurso] ?.professorTitular = professorTitular
         listaDeCurso [codigoCurso] ?.professorAdjunto = professorAdjunto
     }
